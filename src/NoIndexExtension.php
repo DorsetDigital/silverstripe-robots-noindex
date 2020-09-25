@@ -21,7 +21,7 @@ class NoIndexExtension extends Extension
 
     public function updateCMSFields($fields)
     {
-        if (! $this->isActive()) {
+        if (!$this->isActive()) {
             return;
         }
         $fields->unshift(LiteralField::create(
@@ -34,20 +34,21 @@ class NoIndexExtension extends Extension
      * Returns a warning message based on the current configuration of the site
      * @return string
      */
-    private function getWarningMessage() {
+    private function getWarningMessage()
+    {
         $message = _t(self::class . '.NO_INDEX_WARNING', 'Warning: No indexing!');
 
         if (Director::isDev()) {
-            $message .= '<br>'. _t(self::class . '.NO_INDEX_WARNING_DEV', 'This website is running in development mode, and is not being indexed by search engines');
+            $message .= '<br>' . _t(self::class . '.NO_INDEX_WARNING_DEV', 'This website is running in development mode, and is not being indexed by search engines');
             return $message;
         }
 
         if (Director::isTest()) {
-            $message .= '<br>'. _t(self::class . '.NO_INDEX_WARNING_TEST', 'This website is running in test mode, and is not being indexed by search engines');
+            $message .= '<br>' . _t(self::class . '.NO_INDEX_WARNING_TEST', 'This website is running in test mode, and is not being indexed by search engines');
         }
 
         if (Environment::getEnv('SEO_PREVENT_INDEXING') === true) {
-            $message .= '<br>'. _t(self::class . '.NO_INDEX_WARNING_ENV', 'Search engine indexing is disabled by an environment setting');
+            $message .= '<br>' . _t(self::class . '.NO_INDEX_WARNING_ENV', 'Search engine indexing is disabled by an environment setting');
         }
 
         return $message;
@@ -57,7 +58,8 @@ class NoIndexExtension extends Extension
      * Decides whether the module should be enabled
      * @return bool
      */
-    private function isActive() {
+    private function isActive()
+    {
         return (Director::isDev() || Director::isTest() || (Environment::getEnv('SEO_PREVENT_INDEXING') === true));
     }
 }
